@@ -106,11 +106,11 @@ int partitionDescend(int a[], int low, int high)
 		do
 		{
 			i++;
-		} 		while (a[i] <= pivot);//stop loop once value in a[i] > pivot
+		} 		while (a[i] >= pivot);//stop loop once value in a[i] > pivot
 		do
 		{
 			j--;
-		} 		while (a[j] > pivot);
+		} 		while (a[j] < pivot);
 		if (i < j)
 			swap(a[i], a[j]);
 	}
