@@ -1,4 +1,9 @@
 ﻿  Source.cpp
-G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(52,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
-G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(57,6): warning C4101: 'fourthLineVariable': unreferenced local variable
+G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(146,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(248,21): warning C4018: '<': signed/unsigned mismatch
+G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(280,21): warning C4018: '<': signed/unsigned mismatch
+G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(312,21): warning C4018: '<': signed/unsigned mismatch
+G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(347,21): warning C4018: '<': signed/unsigned mismatch
+G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(151,6): warning C4101: 'fourthLineVariable': unreferenced local variable
+G:\Work\GitKraken\ADS103_Assignment2_Question1\Source.cpp(153,6): warning C4101: 'algorithmOrder': unreferenced local variable
   LuaayNaboulsi_A00040598.vcxproj -> G:\Work\GitKraken\ADS103_Assignment2_Question1\Debug\LuaayNaboulsi_A00040598.exe

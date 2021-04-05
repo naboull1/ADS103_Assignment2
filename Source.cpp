@@ -16,6 +16,7 @@ void displayArray(int arr[], int arraySize)
 		cout << arr[i] << " ";
 	}
 	cout << endl;
+
 }
 
 
@@ -29,7 +30,24 @@ void mySwap(int arr[], int i, int j)
 
 
 //Function that contains a WHILE statement that LOOPs(FOR) and checks IF number is higher or lower and swaps using the myswap function
-void bubbleSort(int arr[], int arraySize)
+void bubbleSortDescend(int arr[], int arraySize)
+{
+	bool sorted = false;
+	while (!sorted)
+	{
+		sorted = true;
+		for (int i = 0; i <= arraySize - 1 - 1; i++)
+		{
+			if (arr[i] < arr[i + 1]) //change + to - to change ascending to decending
+			{
+				mySwap(arr, i, i + 1);
+				sorted = false;
+			}
+		}
+	}
+}
+
+void bubbleSortAscend(int arr[], int arraySize)
 {
 	bool sorted = false;
 	while (!sorted)
@@ -43,6 +61,82 @@ void bubbleSort(int arr[], int arraySize)
 				sorted = false;
 			}
 		}
+	}
+}
+
+//Function that contains a	WHILE statement that LOOPS(FOR) swapping positions of indexes based on the value
+int partition(int a[], int low, int high)
+{
+
+	int pivot = a[low];
+	int i = low, j = high;
+	//loop until i and j cross paths
+	while (i < j)
+	{
+		//i looks for value in array which is BIGGER then pivot value
+		//moving RIGHT
+		do 
+		{
+			i++;
+		} 
+		while (a[i] <= pivot);//stop loop once value in a[i] > pivot
+		do 
+		{
+			j--;
+		} 
+		while (a[j] > pivot);
+		if (i < j)
+			swap(a[i], a[j]);
+	}
+	swap(a[low], a[j]);
+	return j;
+}
+
+//Function that contains a	WHILE statement that LOOPS(FOR) swapping positions of indexes based on the value
+int partitionDescend(int a[], int low, int high)
+{
+
+	int pivot = a[low];
+	int i = low, j = high;
+	//loop until i and j cross paths
+	while (i < j)
+	{
+		//i looks for value in array which is BIGGER then pivot value
+		//moving RIGHT
+		do
+		{
+			i++;
+		} 		while (a[i] <= pivot);//stop loop once value in a[i] > pivot
+		do
+		{
+			j--;
+		} 		while (a[j] > pivot);
+		if (i < j)
+			swap(a[i], a[j]);
+	}
+	swap(a[low], a[j]);
+	return j;
+}
+
+//Function that performs the main control of the partitioning after the swapping occurs
+void quickSortDescend(int a[], int low, int high)
+{
+	if (low < high)
+	{
+		int partitionIndex = partitionDescend(a, low, high);
+		quickSortDescend(a, low, partitionIndex);
+		quickSortDescend(a, partitionIndex + 1, high);
+	}
+}
+
+//Function that performs the main control of the partitioning after the swapping occurs
+void quickSort(int a[], int low, int high)
+{
+	if (low < high)
+	{
+		int partitionIndex = partition(a, low, high);
+		quickSort(a, low, partitionIndex);
+		quickSort(a, partitionIndex + 1, high);
 	}
 }
 
@@ -93,7 +187,6 @@ void main()
 	if (firstLineVariable == 0)
 	{
 		cout << "Will perform Ascending sort" << endl;
-		algorithmOrder = 0;
 		
 	}
 
@@ -101,13 +194,12 @@ void main()
 	if (firstLineVariable == 1)
 	{
 		cout << "Will perform Descending sort" << endl;
-		algorithmOrder = 1;
 	}
 
 	//IF statement to check if the second line is a valid input (0 or 1)
 	if (secondLineVariable != 0 && secondLineVariable != 1)
 	{
-		cout << "ERROR cant decide to go easy or complex sorting algorithm" << endl;
+		cout << "ERROR cant decide to go bubble or Quicksort sorting algorithm" << endl;
 		return;
 	}
 
@@ -130,8 +222,8 @@ void main()
 	}
 
 
-	//if 0 will pick an easy algorithm and use bubble sort
-	if (secondLineVariable == 0)
+	//if 0 will pick an easy algorithm and use bubble sort ascending
+	if (secondLineVariable == 0 && firstLineVariable == 0)
 	{
 		//Time Recording starts now
 		cout << "Will perform using bubble sort" << endl;
@@ -140,34 +232,127 @@ void main()
 		//Function bubblesort is run
 		cout << "unsorted:" << endl;
 		displayArray(arr1, 10);
-		cout << "BubbleSorted:" << endl;
-		bubbleSort(arr1, 10);
+		cout << "BubbleSortedAscending:" << endl;
+		bubbleSortAscend(arr1, 10);
 		displayArray(arr1, 10);
 
 		//Time Recording stops and Ms is output
 		std::chrono::steady_clock::time_point end0 = std::chrono::steady_clock::now();
-		std::cout << "Milliseconds = " << std::chrono::duration_cast<std::chrono::milliseconds>(end0 - begin0).count() << "[ms]" << std::endl;
+
+
+		//Writes the result to a text file
+		ofstream  writeFile;
+		writeFile.open("output-a1q1.txt");
+		writeFile << "Milliseconds = " << std::chrono::duration_cast<std::chrono::milliseconds>(end0 - begin0).count() << "[ms]" << std::endl;
+		
+		for (int i = 0; i < nums.size(); ++i)
+		{
+			writeFile << arr1[i] << " ";
+		}
+		cout << endl;
+		writeFile.close();
+		return;
 	}
 
-
-	//if 1 will pick a complex algorithm, planned for future releases
-	if (secondLineVariable == 1)
+	//if 1 will pick an easy algorithm and use bubble sort descending
+	if (secondLineVariable == 0 && firstLineVariable == 1)
 	{
 		//Time Recording starts now
-		cout << "Will perform using complex sort" << endl;
+		cout << "Will perform using bubble sort" << endl;
 		std::chrono::steady_clock::time_point begin1 = std::chrono::steady_clock::now();
-
 
 		//Function bubblesort is run
 		cout << "unsorted:" << endl;
 		displayArray(arr1, 10);
-		cout << "ComplexSorted:" << endl;
-		bubbleSort(arr1, 10);
+		cout << "BubbleSortedDescending:" << endl;
+		bubbleSortDescend(arr1, 10);
 		displayArray(arr1, 10);
 
 		//Time Recording stops and Ms is output
 		std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
-		std::cout << "Milliseconds = " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - begin1).count() << "[ms]" << std::endl;
+
+
+		//Writes the result to a text file
+		ofstream  writeFile;
+		writeFile.open("output-a1q1.txt");
+		writeFile << "Milliseconds = " << std::chrono::duration_cast<std::chrono::milliseconds>(end1 - begin1).count() << "[ms]" << std::endl;
+
+		for (int i = 0; i < nums.size(); ++i)
+		{
+			writeFile << arr1[i] << " ";
+		}
+		cout << endl;
+		writeFile.close();
+		return;
 	}
+
+
+	//if 1 will pick a quicksort Ascending algorithm
+	if (secondLineVariable == 1 && firstLineVariable == 0)
+	{
+		//Time Recording starts now
+		cout << "Will perform using Quick sort Ascending" << endl;
+		std::chrono::steady_clock::time_point begin2 = std::chrono::steady_clock::now();
+
+
+		//Function quicksort is run
+		cout << "unsorted:" << endl;
+		displayArray(arr1, 10);
+		cout << "Quick Sorted Ascending:" << endl;
+		quickSort(arr1, 0, 10);
+		displayArray(arr1, 10);
+
+		//Time Recording stops and Ms is output
+		std::chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
+
+		//Writes the result to a text file
+		ofstream  writeFile;
+		writeFile.open("output-a1q1.txt");
+		writeFile << "Milliseconds = " << std::chrono::duration_cast<std::chrono::milliseconds>(end2 - begin2).count() << "[ms]" << std::endl;
+		for (int i = 0; i < nums.size(); ++i)
+		{
+			writeFile << arr1[i] << " ";
+		}
+		cout << endl;
+		writeFile.close();
+		return;
+
+
+
+		
+	}
+
+	//if 1 will pick a quicksort Descending algorithm
+	if (secondLineVariable == 1 && firstLineVariable == 1)
+	{
+		//Time Recording starts now
+		cout << "Will perform using Quick sort Descending" << endl;
+		std::chrono::steady_clock::time_point begin3 = std::chrono::steady_clock::now();
+
+
+		//Function quicksort is run
+		cout << "unsorted:" << endl;
+		displayArray(arr1, 10);
+		cout << "Quick Sorted Descending:" << endl;
+		quickSortDescend(arr1, 0, 10);
+		displayArray(arr1, 10);
+
+		//Time Recording stops and Ms is output
+		std::chrono::steady_clock::time_point end3 = std::chrono::steady_clock::now();
+
+		//Writes the result to a text file
+		ofstream  writeFile;
+		writeFile.open("output-a1q1.txt");
+		writeFile << "Milliseconds = " << std::chrono::duration_cast<std::chrono::milliseconds>(end3 - begin3).count() << "[ms]" << std::endl;
+		for (int i = 0; i < nums.size(); ++i)
+		{
+			writeFile << arr1[i] << " ";
+		}
+		cout << endl;
+		writeFile.close();
+		return;
+	}
+
+
 	return;
 }
